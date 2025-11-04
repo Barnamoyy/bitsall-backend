@@ -9,17 +9,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AnnouncementService {
 
-    private final AnnouncementRepository announcementRepository;
-    private final UserRepository userRepository;
+    private AnnouncementRepository announcementRepository;
+    private UserRepository userRepository;
+    private AzureBlobService azureBlobService;
 
-    public Announcement createAnnouncement(Announcement announcement) {
+    public Announcement createAnnouncement(Announcement announcement, MultipartFile image) throws IOException {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userEmail));
@@ -28,6 +31,11 @@ public class AnnouncementService {
             if (announcement.getDepartment() != currentUser.getDepartment()) {
                 throw new SecurityException("Department heads can only create announcements for their own department.");
             }
+        }
+
+        if (image != null && !image.isEmpty()) {
+            String imageUrl = azureBlobService.uploadFile(image, "announcements", announcement.getTitle());
+            announcement.setImageUrl(imageUrl);
         }
 
         announcement.setCreatedBy(currentUser);

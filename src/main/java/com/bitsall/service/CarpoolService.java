@@ -1,5 +1,7 @@
 package com.bitsall.service;
 
+import com.bitsall.mapper.CarpoolRequestMapper;
+import com.bitsall.model.dto.CarpoolRequestDTO;
 import com.bitsall.model.entity.CarpoolRequest;
 import com.bitsall.repository.CarpoolRequestRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +13,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarpoolService {
 
-    private final CarpoolRequestRepository carpoolRequestRepository;
+    private CarpoolRequestRepository carpoolRequestRepository;
+    private CarpoolRequestMapper carpoolRequestMapper;
 
-    public CarpoolRequest createCarpoolRequest(CarpoolRequest carpoolRequest) {
+    public CarpoolRequest createCarpoolRequest(CarpoolRequestDTO carpoolRequestDTO) {
+        CarpoolRequest carpoolRequest = carpoolRequestMapper.toEntity(carpoolRequestDTO);
         return carpoolRequestRepository.save(carpoolRequest);
     }
 

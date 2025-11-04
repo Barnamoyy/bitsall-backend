@@ -42,10 +42,81 @@ public class PawnItem {
     private boolean sold = false;
 
     @ElementCollection
-    @Size(min = 1, max = 3, message = "Must have between 1 and 3 image URLs")
     private List<String> imageUrls;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User createdBy;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getYearOfPurchase() {
+        return yearOfPurchase;
+    }
+
+    public void setYearOfPurchase(Integer yearOfPurchase) {
+        this.yearOfPurchase = yearOfPurchase;
+    }
+
+    public Double getAskingPrice() {
+        return askingPrice;
+    }
+
+    public void setAskingPrice(Double askingPrice) {
+        this.askingPrice = askingPrice;
+    }
+
+    public boolean isNegotiable() {
+        return negotiable;
+    }
+
+    public void setNegotiable(boolean negotiable) {
+        this.negotiable = negotiable;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
 }

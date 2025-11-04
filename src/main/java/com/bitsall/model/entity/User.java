@@ -63,4 +63,108 @@ public class User {
 
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PawnItem> pawnItems;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public DepartmentType getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentType department) {
+        this.department = department;
+    }
+
+    public ClubType getClub() {
+        return club;
+    }
+
+    public void setClub(ClubType club) {
+        this.club = club;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public LocalDateTime getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(LocalDateTime dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public List<Announcement> getAnnouncements() {
+        return announcements;
+    }
+
+    public void setAnnouncements(List<Announcement> announcements) {
+        this.announcements = announcements;
+    }
+
+    public List<CarpoolRequest> getCarpoolRequests() {
+        return carpoolRequests;
+    }
+
+    public void setCarpoolRequests(List<CarpoolRequest> carpoolRequests) {
+        this.carpoolRequests = carpoolRequests;
+    }
+
+    public List<PawnItem> getPawnItems() {
+        return pawnItems;
+    }
+
+    public void setPawnItems(List<PawnItem> pawnItems) {
+        this.pawnItems = pawnItems;
+    }
 }

@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,12 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnnouncementController {
 
-    private final AnnouncementService announcementService;
+    private AnnouncementService announcementService;
 
     @PostMapping
     @PreAuthorize("hasAuthority('DEPARTMENT_HEAD')")
-    public ResponseEntity<Announcement> createAnnouncement(@Valid @RequestBody Announcement announcement) {
-        Announcement createdAnnouncement = announcementService.createAnnouncement(announcement);
+    public ResponseEntity<Announcement> createAnnouncement(@Valid @RequestPart("announcement") Announcement announcement, @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
+        Announcement createdAnnouncement = announcementService.createAnnouncement(announcement, image);
         return new ResponseEntity<>(createdAnnouncement, HttpStatus.CREATED);
     }
 
@@ -36,4 +38,6 @@ public class AnnouncementController {
         announcementService.deleteAnnouncement(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
 }

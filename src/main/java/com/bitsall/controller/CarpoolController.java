@@ -1,5 +1,6 @@
 package com.bitsall.controller;
 
+import com.bitsall.model.dto.CarpoolRequestDTO;
 import com.bitsall.model.entity.CarpoolRequest;
 import com.bitsall.service.CarpoolService;
 import jakarta.validation.Valid;
@@ -18,8 +19,8 @@ public class CarpoolController {
     private final CarpoolService carpoolService;
 
     @PostMapping
-    public ResponseEntity<CarpoolRequest> createCarpoolRequest(@Valid @RequestBody CarpoolRequest carpoolRequest) {
-        CarpoolRequest createdCarpoolRequest = carpoolService.createCarpoolRequest(carpoolRequest);
+    public ResponseEntity<CarpoolRequest> createCarpoolRequest(@Valid @RequestBody CarpoolRequestDTO carpoolRequestDTO) {
+        CarpoolRequest createdCarpoolRequest = carpoolService.createCarpoolRequest(carpoolRequestDTO);
         return new ResponseEntity<>(createdCarpoolRequest, HttpStatus.CREATED);
     }
 
