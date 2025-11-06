@@ -15,8 +15,10 @@ public abstract class PawnItemMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "sold", ignore = true)
-    @Mapping(target = "createdBy", expression = "java(userService.getUserById(pawnItemRequest.getCreatedBy().getId()))")
+    @Mapping(target = "createdBy", expression = "java(userService.getUserEntityById(pawnItemRequest.getCreatedBy()))")
     public abstract PawnItem toEntity(PawnItemRequest pawnItemRequest);
 
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "createdBy", expression = "java(pawnItem.getCreatedBy() != null ? pawnItem.getCreatedBy().getId() : null)")
     public abstract PawnItemRequest toDto(PawnItem pawnItem);
 }

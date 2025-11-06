@@ -8,24 +8,37 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class CarpoolService {
 
-    private CarpoolRequestRepository carpoolRequestRepository;
-    private CarpoolRequestMapper carpoolRequestMapper;
+    private final CarpoolRequestRepository carpoolRequestRepository;
+    private final CarpoolRequestMapper carpoolRequestMapper;
 
-    public CarpoolRequest createCarpoolRequest(CarpoolRequestDTO carpoolRequestDTO) {
+    public CarpoolRequestDTO createCarpoolRequest(CarpoolRequestDTO carpoolRequestDTO) {
         CarpoolRequest carpoolRequest = carpoolRequestMapper.toEntity(carpoolRequestDTO);
-        return carpoolRequestRepository.save(carpoolRequest);
+        CarpoolRequest saved = carpoolRequestRepository.save(carpoolRequest);
+        return carpoolRequestMapper.toDto(saved);
     }
 
-    public List<CarpoolRequest> getAllCarpoolRequests() {
-        return carpoolRequestRepository.findAll();
+    public List<CarpoolRequestDTO> getAllCarpoolRequests() {
+        return carpoolRequestRepository.findAll().stream()
+                .map(carpoolRequestMapper::toDto)
+                .toList();
     }
 
-    public void deleteCarpoolRequest(Long id) {
+    public CarpoolRequestDTO getCarpoolRequestById(UUID id) {
+        CarpoolRequest carpoolRequest = carpoolRequestRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Carpool request not found with id: " + id));
+        return carpoolRequestMapper.toDto(carpoolRequest);
+    }
+
+    public void deleteCarpoolRequest(UUID id) {
+        if (!carpoolRequestRepository.existsById(id)) {
+            throw new IllegalArgumentException("Carpool request not found with id: " + id);
+        }
         carpoolRequestRepository.deleteById(id);
     }
 }

@@ -1,7 +1,7 @@
 package com.bitsall.controller;
 
 import com.bitsall.model.dto.CarpoolRequestDTO;
-import com.bitsall.model.entity.CarpoolRequest;
+import com.bitsall.model.dto.SuccessResponse;
 import com.bitsall.service.CarpoolService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/carpool")
@@ -19,20 +20,26 @@ public class CarpoolController {
     private final CarpoolService carpoolService;
 
     @PostMapping
-    public ResponseEntity<CarpoolRequest> createCarpoolRequest(@Valid @RequestBody CarpoolRequestDTO carpoolRequestDTO) {
-        CarpoolRequest createdCarpoolRequest = carpoolService.createCarpoolRequest(carpoolRequestDTO);
-        return new ResponseEntity<>(createdCarpoolRequest, HttpStatus.CREATED);
+    public ResponseEntity<CarpoolRequestDTO> createCarpoolRequest(@Valid @RequestBody CarpoolRequestDTO carpoolRequestDTO) {
+        CarpoolRequestDTO createdCarpoolRequest = carpoolService.createCarpoolRequest(carpoolRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCarpoolRequest);
     }
 
     @GetMapping
-    public ResponseEntity<List<CarpoolRequest>> getAllCarpoolRequests() {
-        List<CarpoolRequest> carpoolRequests = carpoolService.getAllCarpoolRequests();
-        return new ResponseEntity<>(carpoolRequests, HttpStatus.OK);
+    public ResponseEntity<List<CarpoolRequestDTO>> getAllCarpoolRequests() {
+        List<CarpoolRequestDTO> carpoolRequests = carpoolService.getAllCarpoolRequests();
+        return ResponseEntity.ok(carpoolRequests);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CarpoolRequestDTO> getCarpoolRequestById(@PathVariable UUID id) {
+        CarpoolRequestDTO carpoolRequest = carpoolService.getCarpoolRequestById(id);
+        return ResponseEntity.ok(carpoolRequest);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCarpoolRequest(@PathVariable Long id) {
+    public ResponseEntity<SuccessResponse> deleteCarpoolRequest(@PathVariable UUID id) {
         carpoolService.deleteCarpoolRequest(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(new SuccessResponse());
     }
 }
