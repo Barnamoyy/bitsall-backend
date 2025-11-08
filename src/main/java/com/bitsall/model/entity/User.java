@@ -15,6 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -25,8 +26,9 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(columnDefinition = "uuid")
+    private UUID id;
 
     @NotBlank(message = "Full name is required")
     private String fullName;
@@ -53,6 +55,7 @@ public class User {
     @CreationTimestamp
     private LocalDateTime dateJoined;
 
+    @Builder.Default
     private boolean verified = false;
 
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)

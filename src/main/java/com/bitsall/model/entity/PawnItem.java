@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -20,8 +20,9 @@ import java.util.List;
 public class PawnItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(columnDefinition = "uuid")
+    private UUID id;
 
     @NotBlank(message = "Product name is required")
     private String productName;
@@ -37,12 +38,13 @@ public class PawnItem {
     @Min(value = 0, message = "Price must be positive")
     private Double askingPrice;
 
+    @Builder.Default
     private boolean negotiable = false;
 
+    @Builder.Default
     private boolean sold = false;
 
     @ElementCollection
-    @Size(min = 1, max = 3, message = "Must have between 1 and 3 image URLs")
     private List<String> imageUrls;
 
     @ManyToOne(fetch = FetchType.LAZY)
