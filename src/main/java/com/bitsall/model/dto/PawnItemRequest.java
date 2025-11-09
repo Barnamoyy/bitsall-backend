@@ -19,4 +19,8 @@ public class PawnItemRequest {
     
     @NotNull(message = "User ID is required")
     private UUID createdBy;
+    
+    // Seller information (returned in response, not required in request)
+    private String createdByFullName;
+    private String createdByPhoneNumber;
 }

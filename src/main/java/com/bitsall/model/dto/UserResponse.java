@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -20,8 +21,8 @@ public class UserResponse {
     private String fullName;
     private String email;
     private UserRole role;
-    private DepartmentType department;
-    private ClubType club;
+    private List<DepartmentType> departments;
+    private List<ClubType> clubs;
     private String phoneNumber;
     private LocalDateTime dateJoined;
     private boolean verified;

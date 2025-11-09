@@ -44,11 +44,17 @@ public class User {
     @NotNull(message = "User role is required")
     private UserRole role;
 
+    @ElementCollection(targetClass = DepartmentType.class)
+    @CollectionTable(name = "user_departments", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private DepartmentType department;
+    @Column(name = "department")
+    private List<DepartmentType> departments;
 
+    @ElementCollection(targetClass = ClubType.class)
+    @CollectionTable(name = "user_clubs", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private ClubType club;
+    @Column(name = "club")
+    private List<ClubType> clubs;
 
     private String phoneNumber;
 

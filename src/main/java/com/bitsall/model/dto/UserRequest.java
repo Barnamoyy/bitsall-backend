@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -26,9 +27,9 @@ public class UserRequest {
     @NotNull(message = "User role is required")
     private UserRole role;
 
-    private DepartmentType department;
+    private List<DepartmentType> departments;
 
-    private ClubType club;
+    private List<ClubType> clubs;
 
     private String phoneNumber;
 }
