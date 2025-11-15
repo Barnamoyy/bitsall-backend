@@ -23,6 +23,11 @@ public class AnnouncementController {
 
     private final AnnouncementService announcementService;
     private final ObjectMapper objectMapper;
+    
+    @ExceptionHandler(SecurityException.class)
+    public ResponseEntity<String> handleSecurityException(SecurityException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
 
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<AnnouncementRequest> createAnnouncement(
@@ -76,8 +81,14 @@ public class AnnouncementController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<SuccessResponse> deleteAnnouncement(@PathVariable UUID id) {
-        announcementService.deleteAnnouncement(id);
-        return ResponseEntity.ok(new SuccessResponse());
+    public ResponseEntity<?> deleteAnnouncement(@PathVariable UUID id) {
+        try {
+            announcementService.deleteAnnouncement(id);
+            return ResponseEntity.ok(new SuccessResponse());
+        } catch (SecurityException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }

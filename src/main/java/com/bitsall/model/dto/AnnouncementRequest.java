@@ -1,5 +1,6 @@
 package com.bitsall.model.dto;
 
+import com.bitsall.model.enums.ClubType;
 import com.bitsall.model.enums.DepartmentType;
 import com.bitsall.model.enums.VisibilityType;
 import jakarta.validation.constraints.NotBlank;
@@ -25,6 +26,7 @@ public class AnnouncementRequest {
     private List<String> links;
     private VisibilityType visibility;
     private DepartmentType department;
+    private ClubType club;
     private String imageUrl;
     
     @NotNull(message = "User ID is required")

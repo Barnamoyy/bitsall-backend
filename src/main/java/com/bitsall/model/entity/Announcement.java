@@ -1,5 +1,6 @@
 package com.bitsall.model.entity;
 
+import com.bitsall.model.enums.ClubType;
 import com.bitsall.model.enums.DepartmentType;
 import com.bitsall.model.enums.VisibilityType;
 import jakarta.persistence.*;
@@ -46,6 +47,9 @@ public class Announcement {
 
     @Enumerated(EnumType.STRING)
     private DepartmentType department;
+
+    @Enumerated(EnumType.STRING)
+    private ClubType club;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -115,6 +119,14 @@ public class Announcement {
 
     public void setDepartment(DepartmentType department) {
         this.department = department;
+    }
+
+    public ClubType getClub() {
+        return club;
+    }
+
+    public void setClub(ClubType club) {
+        this.club = club;
     }
 
     public User getCreatedBy() {
